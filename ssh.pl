@@ -1,29 +1,26 @@
 #!/usr/bin/perl -w
-
-################################################################################
 # Scott's ssh key inserter script.
 # This will insert public keys in the current user's authorized_keys file
 #
-# TODO: interogate ssh to find the location of the authorized keys file
-# TODO: add callback to report username, ip
-#
 # usage:
-# wget -O - scott.to/ssh.pub | perl
+# wget -O - https://raw.githubusercontent.com/scott-r-lindsey/scotts-ssh/master/ssh.pl | perl
 #
 # or:
-# su slindsey -c 'wget -O - scott.to/ssh.pub | perl'
+# su [username] -c 'wget -O - https://raw.githubusercontent.com/scott-r-lindsey/scotts-ssh/master/ssh.pl | perl'
 #
 # or:
-# useradd slindsey; su slindsey -c 'wget -O - scott.to/ssh.pub | perl'
-################################################################################
-$home = $ENV{HOME};
-#$user = $ENV{USER};
-$authorized_keys = "$home/.ssh/authorized_keys";
-################################################################################
+# useradd [username]; su slindsey -c 'wget -O - https://raw.githubusercontent.com/scott-r-lindsey/scotts-ssh/master/ssh.pl | perl'
+
+# ------------------------------------------------------------------------------
+$home               = $ENV{HOME};
+$authorized_keys    = "$home/.ssh/authorized_keys";
+
+# ------------------------------------------------------------------------------
 foreach ( split(/\n+/, &keys) ){
 	($_) and ($keys{$_} = 1);
 }
-################################################################################
+
+# ------------------------------------------------------------------------------
 if (!-e $home . '/.ssh'){
 	mkdir $home . '/.ssh', 0700;
 	print "Created $home/.ssh (0700)\n";
@@ -35,18 +32,27 @@ if (!-e $authorized_keys){
 }
 `chmod g-w $home`;
 `chmod a-w $home`;
-################################################################################
+
+# ------------------------------------------------------------------------------
 foreach ( split(/\n+/, `cat $authorized_keys`) ){
 	($_) and ($keys{$_} = 1);
 }
-################################################################################
+
+# ------------------------------------------------------------------------------
+
+
+# FIXME run through the keys and remove any that are tagged SL-AUTO-SSH
+
+
+
 open AUTHKEY, ">$authorized_keys";
 foreach (keys %keys){
 	print AUTHKEY "$_\n";
 }
 close AUTHKEY;
+
 print "inserted public keys in $authorized_keys\n";
-################################################################################
+# ------------------------------------------------------------------------------
 
 sub keys{
 	return '
