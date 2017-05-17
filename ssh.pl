@@ -18,7 +18,7 @@ if (!-e $home . '/.ssh'){
 if (!-e $authorized_keys){
     `>$authorized_keys`;
     chmod 0600, $authorized_keys;
-    print "Created $authorized_keys (0700)\n";
+    print "Created $authorized_keys (0600)\n";
 }
 `chmod g-w $home`;
 `chmod a-w $home`;
