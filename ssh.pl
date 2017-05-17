@@ -11,6 +11,7 @@ $authorized_keys    = "$home/.ssh/authorized_keys";
 $key_identifier     = 'SL-AUTO-SSH';
 
 # ------------------------------------------------------------------------------
+# Setup any missing files / folders and fix common permission issues
 if (!-e $home . '/.ssh'){
     mkdir $home . '/.ssh', 0700;
     print "Created $home/.ssh (0700)\n";
