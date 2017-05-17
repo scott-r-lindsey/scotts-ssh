@@ -1,8 +1,8 @@
-# scotts-ssh
+# Scott's ssh public key installer
 
-This is Scott's public keys, so that you can easily give Scott access to a server.  
+Maybe around the hundredeth time I installed public keys on a server, I decided I really ought to add some automation.  This is what I came up with.  
 
-Use like this:
+Use like so:
 
 ```bash
 wget -O - https://raw.githubusercontent.com/scott-r-lindsey/scotts-ssh/master/ssh.pl | perl
